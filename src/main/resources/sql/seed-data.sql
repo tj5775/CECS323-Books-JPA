@@ -1,3 +1,4 @@
+
 -- // List of Customers that I want to persist.
 -- INSERT INTO Customers(customer_id, last_name, first_name, street, zip, phone) VALUES(123456, 'Torres', 'Victor', '234 Cesar Chavez', '90495', '475-203-4958')
 -- INSERT INTO Customers(customer_id, last_name, first_name, street, zip, phone) VALUES(234566, 'Robinson', 'Alan', '57433 Manhattan st', '85473', '958-475-4658')
