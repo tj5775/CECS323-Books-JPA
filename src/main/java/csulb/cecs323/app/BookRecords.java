@@ -50,13 +50,50 @@ public class BookRecords {
       publishers.add(publisher2);
       publishedBookRecords.createEntity(publishers);
 
-      //User interface
-      Scanner input = new Scanner(System.in);
-
-
       // Commit the changes so that the new data persists and is visible to other users.
       tx.commit();
       LOGGER.fine("End of Transaction");
+
+      //User interface
+      Scanner input = new Scanner(System.in);
+      System.out.println("Type in a number to choose an option");
+      System.out.println("\n1. Add new book");
+      System.out.println("2. List all information");
+      System.out.println("3. Delete a book");
+      System.out.println("4. Update book");
+      System.out.println("5. List all primary keys");
+
+      boolean exitVar = true;
+      while(exitVar)
+      {
+         int userOption = input.nextInt();
+         switch(userOption) {
+            case 1:
+               System.out.println("Option 1");
+               exitVar = false;
+               break;
+            case 2:
+               System.out.println("Option 2");
+               exitVar = false;
+               break;
+            case 3:
+               System.out.println("Option 3");
+               exitVar = false;
+               break;
+            case 4:
+               System.out.println("Option 4");
+               exitVar = false;
+               break;
+            case 5:
+               System.out.println("Option 5");
+               exitVar = false;
+               break;
+            default:
+               System.out.println("You have chosen an invalid option, please enter another input");
+               break;
+         }
+      }
+
 
    } // End of the main method
 
