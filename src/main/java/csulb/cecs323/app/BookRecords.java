@@ -45,8 +45,13 @@ public class BookRecords {
       tx.begin();
 
       Publisher publisher = new Publisher("Al", "323", "at@email");
+      Publisher publisher2 = new Publisher("Andrew", "151", "ab@email");
       publishers.add(publisher);
+      publishers.add(publisher2);
       publishedBookRecords.createEntity(publishers);
+
+      //User interface
+      Scanner input = new Scanner(System.in);
 
 
       // Commit the changes so that the new data persists and is visible to other users.
