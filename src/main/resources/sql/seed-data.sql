@@ -13,3 +13,8 @@ INSERT INTO Authoring_Entities(email, Authoring_Entities_Type, head_writer, name
 INSERT INTO Ad_Hoc_Teams_Member(individual_authors_email, ad_hoc_teams_email) VALUES ('Mary.Jonson@gmail.com', 'Carlos.Parker@gmail.com')
 INSERT INTO Ad_Hoc_Teams_Member(individual_authors_email, ad_hoc_teams_email) VALUES ('Sally.Nguyen@gmail.com', 'Mary.Jonson@gmail.com')
 INSERT INTO Ad_Hoc_Teams_Member(individual_authors_email, ad_hoc_teams_email) VALUES ('Melissa.Cambridge@gmail.com', 'Carlos.Parker@gmail.com')
+
+INSERT INTO Books(ISBN, title, year_published, publisher_name, authoring_entity_name) VALUES ('3747362', 'The House of Mirth',2002, 'Graywolf Press', 'Mathew.Rogers@gmail.com')
+INSERT INTO Books(ISBN, title, year_published, publisher_name, authoring_entity_name) VALUES ('3849382', 'The Sun Also Rises',2013, 'Penguin Books', 'Mary.Jonson@gmail.com')
+INSERT INTO Books(ISBN, title, year_published, publisher_name, authoring_entity_name) VALUES ('3847323', 'Moab is my Washpot',2020, 'Akashic Books', 'Carlos.Parker@gmail.com')
+INSERT INTO Books(ISBN, title, year_published, publisher_name, authoring_entity_name) VALUES ('5849329', 'No wind of blame',2021, 'Graywolf Press', 'Melissa.Cambridge@gmail.com')
