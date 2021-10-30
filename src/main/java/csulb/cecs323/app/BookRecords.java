@@ -38,15 +38,15 @@ public class BookRecords {
       // Create an instance of BookRecords and store our new EntityManager as an instance variable.
       BookRecords publishedBookRecords = new BookRecords(manager);
 
-      //List<Publisher> publishers = new ArrayList<>();
+      List<Publisher> publishers = new ArrayList<>();
 
       LOGGER.fine("Begin of Transaction");
       EntityTransaction tx = manager.getTransaction();
       tx.begin();
 
-      //Publisher publisher = new Publisher("Al", "323", "at@email");
-      //publishers.add(publisher);
-      //publishedBookRecords.createEntity(publishers);
+      Publisher publisher = new Publisher("Al", "323", "at@email");
+      publishers.add(publisher);
+      publishedBookRecords.createEntity(publishers);
 
 
       // Commit the changes so that the new data persists and is visible to other users.
@@ -54,6 +54,10 @@ public class BookRecords {
       LOGGER.fine("End of Transaction");
 
    } // End of the main method
+
+   public void displayPublishers(){
+
+   }
 
    /**
     * Method to check if a certain input is an integer.
