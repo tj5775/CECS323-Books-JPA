@@ -1,12 +1,17 @@
 package csulb.cecs323.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Publisher {
+
+//    @ManyToMany(mappedBy = "publisher", cascade = CascadeType.PERSIST)
+//    private List<Books> books = new ArrayList<>();
+
     @Id
+
     @Column(nullable = false, length = 80)
     private String name;
 
@@ -15,6 +20,9 @@ public class Publisher {
 
     @Column(nullable = false, length = 80, unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "publisher_name_books", cascade = CascadeType.PERSIST)
+    private List<Books> books;
 
     public Publisher(){}
 

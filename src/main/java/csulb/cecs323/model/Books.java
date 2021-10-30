@@ -1,14 +1,18 @@
 package csulb.cecs323.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames =
                 {"title", "publisher_name"}),
                 @UniqueConstraint(columnNames =
                 {"title", "authoring_entity_name"})})
-
 public class Books {
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "ISBN", referencedColumnName = "ISBN", nullable = false)
+//    private List<Publisher> publisher;
+
     @Id
     @Column(nullable = false, length = 17)
     private String ISBN;
