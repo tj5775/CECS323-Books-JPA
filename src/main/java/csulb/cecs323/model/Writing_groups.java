@@ -3,8 +3,17 @@ package csulb.cecs323.model;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.NamedNativeQuery;
 
 @Entity
+@NamedNativeQuery(
+        name="ReturnAllWritingGroups",
+        query = "SELECT * " +
+                "FROM   authoring_entities " +
+                "WHERE authoring_entities_type = 'Writing Groups' " +
+                "ORDER BY email, name",
+        resultClass = Writing_groups.class
+)
 @DiscriminatorValue("Writing Groups")
 public class Writing_groups extends Authoring_Entities {
     @Column(nullable = true, length = 80)
