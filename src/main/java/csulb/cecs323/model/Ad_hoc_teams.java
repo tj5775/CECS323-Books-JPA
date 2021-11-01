@@ -5,6 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+
+    @NamedNativeQuery(
+            name = "ReturnAllAdHocTeams",
+            query = "SELECT * " +
+                    "FROM   authoring_entities " +
+                    "WHERE authoring_entities_type = 'Ad Hoc Teams' " +
+                    "ORDER BY email, name",
+                resultClass = Ad_hoc_teams.class)
+
 @DiscriminatorValue("Ad Hoc Teams")
 public class Ad_hoc_teams extends Authoring_Entities{
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -15,9 +24,9 @@ public class Ad_hoc_teams extends Authoring_Entities{
     )
     private List<Individual_authors> individual_authors;
 
-    public Ad_hoc_teams(String email, String name, List<Authoring_Entities> individual_authors) {
+    public Ad_hoc_teams(String email, String name) {
         super(email, name);
-        this.individual_authors = new ArrayList<Individual_authors>();
+        this.individual_authors = new ArrayList<>();
     }
 
     public Ad_hoc_teams() {
@@ -45,10 +54,10 @@ public class Ad_hoc_teams extends Authoring_Entities{
         this.individual_authors = new ArrayList<Individual_authors>();
     }
 
-    @Override
-    public String toString() {
-        return "Ad_hoc_teams{" +
-                "individual_authors=" + individual_authors +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Ad_hoc_teams{" +
+//                "individual_authors=" + individual_authors +
+//                '}';
+//    }
 }

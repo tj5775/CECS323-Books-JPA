@@ -8,6 +8,12 @@ import java.util.List;
                 {"title", "publisher_name"}),
                 @UniqueConstraint(columnNames =
                 {"title", "authoring_entity_name"})})
+@NamedNativeQuery(
+        name="ReturnAllBooks",
+        query = "SELECT * " +
+                "FROM   BOOKS",
+        resultClass = Books.class
+)
 public class Books {
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "ISBN", referencedColumnName = "ISBN", nullable = false)
@@ -23,7 +29,7 @@ public class Books {
     @Column(nullable = false)
     private int year_published;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "authoring_entity_name")
     private Authoring_Entities entity_name;
 
@@ -90,8 +96,8 @@ public class Books {
                 "ISBN='" + ISBN + '\'' +
                 ", title='" + title + '\'' +
                 ", year_published=" + year_published +
-                ", authoring_entity_name='" + entity_name + '\'' +
-                ", publisher_name='" + publisher_name_books + '\'' +
+                ", entity_name=" + entity_name +
+                ", publisher_name_books=" + publisher_name_books +
                 '}';
     }
 }

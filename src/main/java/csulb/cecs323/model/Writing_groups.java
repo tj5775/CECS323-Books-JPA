@@ -13,8 +13,8 @@ public class Writing_groups extends Authoring_Entities {
     @Column(nullable = true)
     private int year_formed;
 
-    public Writing_groups(String name, String email, String head_writer, int year_formed) {
-        super(name, email);
+    public Writing_groups(String email, String name, String head_writer, int year_formed) {
+        super(email, name);
         this.head_writer = head_writer;
         this.year_formed = year_formed;
     }

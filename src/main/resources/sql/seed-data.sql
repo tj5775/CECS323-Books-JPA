@@ -3,18 +3,3 @@ INSERT INTO Publisher(name, email, phone) VALUES('Penguin Books', 'Penguin.Books
 INSERT INTO Publisher(name, email, phone) VALUES('Dzanc Books', 'Dzanc.Books@gmail.com', '909-485-1023')
 INSERT INTO Publisher(name, email, phone) VALUES('Akashic Books', 'Akashic.Books@gmail.com', '493-483-2939')
 INSERT INTO Publisher(name, email, phone) VALUES('Random House', 'Random.House@gmail.com', '760-483-2934')
-
-INSERT INTO Authoring_Entities(email, Authoring_Entities_Type, name, head_writer, year_formed) VALUES ('Mathew.Rogers@gmail.com', 'Individual Authors', 'Mathew Rogers', 'Al', 1997)
-INSERT INTO Authoring_Entities(email, Authoring_Entities_Type, head_writer, name, year_formed) VALUES ('Mary.Jonson@gmail.com', 'Ad Hoc Teams', 'Mary Jonson', 'Mary Jonson', 2017)
-INSERT INTO Authoring_Entities(email, Authoring_Entities_Type, head_writer, name, year_formed) VALUES ('Carlos.Parker@gmail.com', 'Ad Hoc Teams', 'Mary Jonson', 'Carlos Parker', 2017)
-INSERT INTO Authoring_Entities(email, Authoring_Entities_Type, name, year_formed) VALUES ('Melissa.Cambridge@gmail.com', 'Individual Authors', 'Melissa Cambridge', 2021)
-INSERT INTO Authoring_Entities(email, Authoring_Entities_Type, head_writer, name, year_formed) VALUES ('Sally.Nguyen@gmail.com', 'Ad Hoc Teams', 'Mary Jonson', 'Sally Nguyen', 2017)
-
-INSERT INTO Ad_Hoc_Teams_Member(individual_authors_email, ad_hoc_teams_email) VALUES ('Mary.Jonson@gmail.com', 'Carlos.Parker@gmail.com')
-INSERT INTO Ad_Hoc_Teams_Member(individual_authors_email, ad_hoc_teams_email) VALUES ('Sally.Nguyen@gmail.com', 'Mary.Jonson@gmail.com')
-INSERT INTO Ad_Hoc_Teams_Member(individual_authors_email, ad_hoc_teams_email) VALUES ('Melissa.Cambridge@gmail.com', 'Carlos.Parker@gmail.com')
-
-INSERT INTO Books(ISBN, title, year_published, publisher_name, authoring_entity_name) VALUES ('3747362', 'The House of Mirth',2002, 'Graywolf Press', 'Mathew.Rogers@gmail.com')
-INSERT INTO Books(ISBN, title, year_published, publisher_name, authoring_entity_name) VALUES ('3849382', 'The Sun Also Rises',2013, 'Penguin Books', 'Mary.Jonson@gmail.com')
-INSERT INTO Books(ISBN, title, year_published, publisher_name, authoring_entity_name) VALUES ('3847323', 'Moab is my Washpot',2020, 'Akashic Books', 'Carlos.Parker@gmail.com')
-INSERT INTO Books(ISBN, title, year_published, publisher_name, authoring_entity_name) VALUES ('5849329', 'No wind of blame',2021, 'Graywolf Press', 'Melissa.Cambridge@gmail.com')

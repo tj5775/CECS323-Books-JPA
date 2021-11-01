@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@NamedNativeQuery(
+        name="ReturnAllPublishers",
+        query = "SELECT * " +
+                "FROM   PUBLISHER",
+        resultClass = Publisher.class
+)
 public class Publisher {
-
-//    @ManyToMany(mappedBy = "publisher", cascade = CascadeType.PERSIST)
-//    private List<Books> books = new ArrayList<>();
 
     @Id
 
@@ -56,9 +59,14 @@ public class Publisher {
         this.phone = phone;
         this.email = email;
     }
+    public void removePublisher(){
+//        this.name = "";
+//        this.phone = "";
+//        this.email = "";
+    }
     @Override
     public String toString () {
-        return "Publisher - Name: " + this.name + ", Phone: " + this.phone
-                + " email: " + this.email;
+        return "Name: " + this.name + " | Phone: " + this.phone
+                + " | Email: " + this.email;
     }
 }

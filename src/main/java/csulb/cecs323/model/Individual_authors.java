@@ -1,13 +1,18 @@
 package csulb.cecs323.model;
 
-import javax.persistence.CascadeType;
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@NamedNativeQuery(
+        name="ReturnAllIndividualAuthors",
+        query = "SELECT * " +
+                "FROM   authoring_entities " +
+                "WHERE authoring_entities_type = 'Individual Authors' " +
+                "ORDER BY email, name",
+        resultClass = Individual_authors.class
+)
 @DiscriminatorValue("Individual Authors")
 public class Individual_authors extends Authoring_Entities{
 
@@ -15,7 +20,7 @@ public class Individual_authors extends Authoring_Entities{
         cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Ad_hoc_teams> ad_hoc_teams;
 
-    public Individual_authors(String email, String name, List<Ad_hoc_teams> ad_hoc_teams) {
+    public Individual_authors(String email, String name) {
         super(email, name);
         this.ad_hoc_teams = new ArrayList<Ad_hoc_teams>();
     }
@@ -45,10 +50,10 @@ public class Individual_authors extends Authoring_Entities{
         }
     }
 
-    @Override
-    public String toString() {
-        return "individual_authors{" +
-                "ad_hoc_teams=" + ad_hoc_teams +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "individual_authors{" +
+//                "ad_hoc_teams=" + ad_hoc_teams +
+//                '}';
+//    }
 }

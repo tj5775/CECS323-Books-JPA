@@ -1,9 +1,25 @@
 package csulb.cecs323.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
+@NamedNativeQueries({
+    @NamedNativeQuery(
+            name = "Authoring_entities_count",
+            query = "SELECT COUNT(*) " +
+                    "FROM   authoring_entities " +
+                    "WHERE email = ?"),
+    @NamedNativeQuery(
+            name = "Authoring_entities_all",
+            query = "SELECT * " +
+                    "FROM   authoring_entities " +
+                    "ORDER BY name",
+    resultClass=Authoring_Entities.class)
+
+})
+
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "authoring_entities_type", discriminatorType = DiscriminatorType.STRING)
 public class Authoring_Entities {
@@ -15,8 +31,10 @@ public class Authoring_Entities {
     @Column(nullable = false, length = 80)
     private String name;
 
+    @OneToMany(mappedBy = "entity_name", cascade = CascadeType.PERSIST)
+    private List<Books> books;
 
-    public Authoring_Entities(String name, String email) {
+    public Authoring_Entities(String email, String name) {
         this.email = email;
         this.name = name;
     }
@@ -33,14 +51,6 @@ public class Authoring_Entities {
         this.email = email;
     }
 
-//    public String getAuthoring_entity_type() {
-//        return authoring_entity_type;
-//    }
-//
-//    public void setAuthoring_entity_type(String authoring_entity_type) {
-//        this.authoring_entity_type = authoring_entity_type;
-//    }
-
     public String getName() {
         return name;
     }
@@ -49,25 +59,12 @@ public class Authoring_Entities {
         this.name = name;
     }
 
-//    public String getHead_writer() {
-//        return head_writer;
-//    }
-//
-//    public void setHead_writer(String head_writer) {
-//        this.head_writer = head_writer;
-//    }
-//
-//    public int getYear_formed() {
-//        return year_formed;
-//    }
-//
-//    public void setYear_formed(int year_formed) {
-//        this.year_formed = year_formed;
-//    }
 
     @Override
-    public String toString () {
-        return "Authoring_Entities - email: " + this.email + ", authoring_entity_type: " +
-                ", Name: " + this.name;
+    public String toString() {
+        return "Authoring_Entities{" +
+                "email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                '}';
     }
 }
