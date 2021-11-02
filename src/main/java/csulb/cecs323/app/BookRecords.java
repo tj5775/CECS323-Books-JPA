@@ -66,6 +66,9 @@ public class BookRecords {
 
    } // End of the main method
 
+   /**
+    * Method to take in user input, navigating through the main menu options
+    */
    public void mainMenu(){
       //User interface
       Scanner input = new Scanner(System.in);
@@ -111,6 +114,9 @@ public class BookRecords {
       }
    }
 
+   /**
+    * Method to take in user input, navigating through the general authoring entities menu
+    */
    public void authoringEntitiesMenu(){
       Scanner input = new Scanner(System.in);
       boolean exitVar = true;
@@ -151,6 +157,9 @@ public class BookRecords {
       }
    }
 
+   /**
+    * Method to take in user input, navigating through options to add a new authoring entity
+    */
    public void authoringEntityAddMenu(){
       EntityManagerFactory factory = Persistence.createEntityManagerFactory("BookRecords");
       EntityManager manager = factory.createEntityManager();
@@ -201,6 +210,9 @@ public class BookRecords {
       }
    }
 
+   /**
+    * Method to create a new author instance using user input
+    */
    public void addIndividualAuthor(){
       EntityManagerFactory factory = Persistence.createEntityManagerFactory("BookRecords");
       EntityManager manager = factory.createEntityManager();
@@ -260,6 +272,9 @@ public class BookRecords {
       LOGGER.fine("End of Transaction");
    }
 
+   /**
+    * Method to create new a new Ad Hoc team using user input
+    */
    public void addAdHocTeam(){
       EntityManagerFactory factory = Persistence.createEntityManagerFactory("BookRecords");
       EntityManager manager = factory.createEntityManager();
@@ -319,6 +334,9 @@ public class BookRecords {
       LOGGER.fine("End of Transaction");
    }
 
+   /**
+    * Method to create new writing groups using user input
+    */
    public void addWritingGroup(){
       EntityManagerFactory factory = Persistence.createEntityManagerFactory("BookRecords");
       EntityManager manager = factory.createEntityManager();
@@ -408,6 +426,9 @@ public class BookRecords {
       LOGGER.fine("End of Transaction");
    }
 
+   /**
+    * Method to take in user input to get information about an author, then add that author to a specific team
+    */
    public void addIndividualToTeam(){
       EntityManagerFactory factory = Persistence.createEntityManagerFactory("BookRecords");
       EntityManager manager = factory.createEntityManager();
@@ -493,6 +514,9 @@ public class BookRecords {
       }
    }
 
+   /**
+    * Method to take in user input, navigating the general books menu
+    */
    public void booksMenu(){
       Scanner input = new Scanner(System.in);
       boolean exitVar = true;
@@ -540,6 +564,9 @@ public class BookRecords {
       }
    }
 
+   /**
+    * Method to take in user input, navigating through the books-add submenu
+    */
    public void booksAddMenu(){
       EntityManagerFactory factory = Persistence.createEntityManagerFactory("BookRecords");
       EntityManager manager = factory.createEntityManager();
@@ -703,6 +730,9 @@ public class BookRecords {
       LOGGER.fine("End of Transaction");
    }
 
+   /**
+    * Method to take in user input, navigating through the books-remove submenu
+    */
    public void booksRemoveMenu(){
       EntityManagerFactory factory = Persistence.createEntityManagerFactory("BookRecords");
       EntityManager manager = factory.createEntityManager();
@@ -744,6 +774,9 @@ public class BookRecords {
       LOGGER.fine("End of Transaction");
    }
 
+   /**
+    * Method to take in user input, navigating through the books-update submenu
+    */
    public void booksUpdateMenu(){
       EntityManagerFactory factory = Persistence.createEntityManagerFactory("BookRecords");
       EntityManager manager = factory.createEntityManager();
@@ -847,6 +880,9 @@ public class BookRecords {
       LOGGER.fine("End of Transaction");
    }
 
+   /**
+    * Method to take in user input, navigating through the publishers submenu
+    */
    public void publishersMenu(){
       Scanner input = new Scanner(System.in);
       boolean exitVar = true;
@@ -887,6 +923,9 @@ public class BookRecords {
       }
    }
 
+   /**
+    * Method to take in user input, navigating through the publisher-add menu
+    */
    public void publisherAddMenu(){
       EntityManagerFactory factory = Persistence.createEntityManagerFactory("BookRecords");
       EntityManager manager = factory.createEntityManager();
@@ -954,6 +993,9 @@ public class BookRecords {
 
    }
 
+   /**
+    * Method to take in user input, navigating through the publisher-remove submenu
+    */
    public void publisherRemoveMenu(){
       EntityManagerFactory factory = Persistence.createEntityManagerFactory("BookRecords");
       EntityManager manager = factory.createEntityManager();
@@ -1011,6 +1053,9 @@ public class BookRecords {
       LOGGER.fine("End of Transaction");
    }
 
+   /**
+    * Method to take in user input, navigating through the primary-key submenu
+    */
    public void primaryKeyMenu() {
       System.out.println("Option 1: Go back To Main Menu\nOption 2: Exit");
       Scanner input = new Scanner(System.in);
@@ -1033,6 +1078,14 @@ public class BookRecords {
       }
    }
 
+   /**
+    * Method to populate the database of authoring entities.
+    *
+    * @param individual_authorsList            The list of authors
+    * @param ad_hoc_teamsList                  The list of ad hoc teams
+    * @param writing_groupsList                The list of writing groups
+    * @param booksList                         The list of books
+    */
    public void populateAuthoringEnt(List<Individual_authors> individual_authorsList, List<Ad_hoc_teams> ad_hoc_teamsList,
                                     List<Writing_groups> writing_groupsList, List<Books> booksList){
 
@@ -1077,6 +1130,10 @@ public class BookRecords {
       booksList.add(book2);
    }
 
+
+   /**
+    * Method to display all stored publishers.
+    */
    public void displayAllPublishers(){
       List<Publisher> allPublishers =
               this.entityManager.createNamedQuery("ReturnAllPublishers", Publisher.class).getResultList();
@@ -1096,6 +1153,9 @@ public class BookRecords {
       }
    }
 
+   /**
+    * Method to display all the stored books.
+    */
    public void displayAllBooks(){
       List<Books> allBooks =
               this.entityManager.createNamedQuery("ReturnAllBooks", Books.class).getResultList();
@@ -1114,6 +1174,9 @@ public class BookRecords {
       }
    }
 
+   /**
+    * Method to display all the stored Individual Authors
+    */
    public void displayAllIndividualAuthors(){
       List<Individual_authors> allIndivAuthors =
               this.entityManager.createNamedQuery("ReturnAllIndividualAuthors", Individual_authors.class).getResultList();
@@ -1130,6 +1193,9 @@ public class BookRecords {
       }
    }
 
+   /**
+    * Method to display all the stored Ad Hoc teams
+    */
    public void displayAllAdHocTeams(){
       List<Ad_hoc_teams> allAdHocTeams =
               this.entityManager.createNamedQuery("ReturnAllAdHocTeams", Ad_hoc_teams.class).getResultList();
@@ -1146,6 +1212,9 @@ public class BookRecords {
       }
    }
 
+   /**
+    * Method to display all the stored writing groups
+    */
    public void displayAllWritingGroups(){
       List<Writing_groups> allWritingGroups =
               this.entityManager.createNamedQuery("ReturnAllWritingGroups", Writing_groups.class).getResultList();
@@ -1163,6 +1232,9 @@ public class BookRecords {
 
    }
 
+   /**
+    * Method to display all the stored authoring entities
+    */
    public void displayAllAuthoringEntities(){
       List<List<String>> authoring_entitiesList = getAllAuthoringEntities();
 
@@ -1179,6 +1251,10 @@ public class BookRecords {
       }
    }
 
+
+   /**
+    * Method to display all the primary keys of each table
+    */
    public void displayPrimaryKeys(){
       List<Books> bookList =
               this.entityManager.createNamedQuery("ReturnAllBooks", Books.class).getResultList();
@@ -1220,6 +1296,11 @@ public class BookRecords {
       }
    }
 
+
+   /**
+    * Method to get all the authoring entities
+    * @return                 The list of all authoring entities, including individual authors, groups, and teams
+    */
    public List<List<String>> getAllAuthoringEntities(){
       List<Individual_authors> individual_authorsList =
               this.entityManager.createNamedQuery("ReturnAllIndividualAuthors", Individual_authors.class).getResultList();
@@ -1256,6 +1337,13 @@ public class BookRecords {
       return allAuthoringEntities;
    }
 
+
+   /**
+    * Method to display all the available teams for individual authors.
+    *
+    * @param authorInTeams    The author to be part of a team
+    * @return                 The list of Ad Hoc teams the author can join
+    */
    public List<Ad_hoc_teams> displayAvailableTeams(List<Ad_hoc_teams> authorInTeams){
       List<Ad_hoc_teams> temp = new ArrayList<>();
       List<Ad_hoc_teams> ad_hoc_teamsList =
@@ -1289,6 +1377,9 @@ public class BookRecords {
       }
    }
 
+   /**
+    * Method to display all the members of an Ad Hoc team.
+    */
    public void displayAdHocTeamMembers(){
       EntityManagerFactory factory = Persistence.createEntityManagerFactory("BookRecords");
       EntityManager manager = factory.createEntityManager();
