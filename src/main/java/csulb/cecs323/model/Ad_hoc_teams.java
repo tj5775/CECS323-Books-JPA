@@ -6,14 +6,21 @@ import java.util.List;
 
 @Entity
 
-    @NamedNativeQuery(
-            name = "ReturnAllAdHocTeams",
-            query = "SELECT * " +
-                    "FROM   authoring_entities " +
-                    "WHERE authoring_entities_type = 'Ad Hoc Teams' " +
-                    "ORDER BY email, name",
-                resultClass = Ad_hoc_teams.class)
-
+@NamedNativeQuery(
+        name = "ReturnAllAdHocTeams",
+        query = "SELECT * " +
+                "FROM   authoring_entities " +
+                "WHERE authoring_entities_type = 'Ad Hoc Teams' " +
+                "ORDER BY email, name ",
+            resultClass = Ad_hoc_teams.class)
+@NamedNativeQuery(
+        name = "ReturnAllAdHocTeamMembers",
+        query = "SELECT * " +
+                "FROM ad_hoc_teams_member ad inner join authoring_entities au " +
+                "on  ad.ad_hoc_teams_email = au.email " +
+                "and ad.individual_author_email = au.email" +
+                "ORDER BY individual_authors_email ",
+        resultClass = Authoring_Entities.class)
 @DiscriminatorValue("Ad Hoc Teams")
 public class Ad_hoc_teams extends Authoring_Entities{
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

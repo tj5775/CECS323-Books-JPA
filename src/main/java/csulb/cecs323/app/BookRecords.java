@@ -61,12 +61,6 @@ public class BookRecords {
       // Commit the changes so that the new data persists and is visible to other users.
       tx.commit();
       LOGGER.fine("End of Transaction");
-
-//      publishedBookRecords.displayAllAuthoringEntities();
-//      publishedBookRecords.displayAllIndividualAuthors();
-//      publishedBookRecords.displayAllAdHocTeams();
-//      publishedBookRecords.displayAllWritingGroups();
-//      publishedBookRecords.displayAllAuthoringEntities();
       publishedBookRecords.mainMenu();
 
 
@@ -123,8 +117,7 @@ public class BookRecords {
       while(exitVar) {
          System.out.println("Authoring Entities Menu. Type in a number to choose an option");
          System.out.println("\n1. Display all Authoring Entities \t2. Add a new Authoring Entity");
-         //System.out.println("3. Remove an Authoring Entity   \t4. Update an Authoring Entity");
-         System.out.println("3. Go to Main menu");
+         System.out.println("3. Display all Ad Hoc Team Members\t4. Go to Main menu");
 
          int userOption = input.nextInt();
          switch(userOption) {
@@ -140,19 +133,13 @@ public class BookRecords {
                authoringEntityAddMenu();
                authoringEntitiesMenu();
                break;
- /*           case 3:
-               System.out.println("Remove an Authoring Entity");
+           case 3:
+               System.out.println("Display Ad Hoc Team members");
                exitVar = false;
-               booksRemoveMenu();
+               displayAdHocTeamMembers();
                authoringEntitiesMenu();
                break;
             case 4:
-               System.out.println("Update an Authoring Entity");
-               exitVar = false;
-               booksUpdateMenu();
-               authoringEntitiesMenu();
-               break;*/
-            case 3:
                System.out.println("Go to main menu");
                exitVar = false;
                mainMenu();
@@ -182,7 +169,7 @@ public class BookRecords {
             case 1:
                System.out.println("Add new Individual Author");
                exitVar = false;
-               addIndividualAuthorMenu();
+               addIndividualAuthor();
                authoringEntityAddMenu();
                break;
             case 2:
@@ -200,7 +187,7 @@ public class BookRecords {
             case 4:
                System.out.println("Add an existing Individual Author to a Ad Hoc Team");
                exitVar = false;
-
+               addIndividualToTeam();
                authoringEntityAddMenu();
                break;
             case 5:
@@ -214,18 +201,16 @@ public class BookRecords {
       }
    }
 
-   public void addIndividualAuthorMenu(){
+   public void addIndividualAuthor(){
       EntityManagerFactory factory = Persistence.createEntityManagerFactory("BookRecords");
       EntityManager manager = factory.createEntityManager();
       BookRecords publishedBookRecords = new BookRecords(manager);
       List<List<String>> authoringEntList = getAllAuthoringEntities();
-      List<Individual_authors> individual_authorsList =
-              this.entityManager.createNamedQuery("ReturnAllIndividualAuthors", Individual_authors.class).getResultList();
       Scanner scanner = new Scanner(System.in);
       String name = "";
       String email = "";
       boolean validInfo = false;
-      System.out.println("Please enter the following book's information:");
+      System.out.println("Please enter the following Individual Author's information:");
 
       // Selecting Name
       while(!validInfo) {
@@ -423,13 +408,98 @@ public class BookRecords {
       LOGGER.fine("End of Transaction");
    }
 
+   public void addIndividualToTeam(){
+      EntityManagerFactory factory = Persistence.createEntityManagerFactory("BookRecords");
+      EntityManager manager = factory.createEntityManager();
+      BookRecords publishedBookRecords = new BookRecords(manager);
+      List<Individual_authors> individual_authorsList =
+              this.entityManager.createNamedQuery("ReturnAllIndividualAuthors", Individual_authors.class).getResultList();
+      //List<List<String>> authoringEntList = getAllAuthoringEntities();
+      displayAllIndividualAuthors();
+      Scanner scanner = new Scanner(System.in);
+      String userInput = "";
+      boolean validUserInput = false;
+      boolean isValidAuthorNumb = false;
+      int authorNumber = -1;
+
+      while (!validUserInput || !isValidAuthorNumb) {
+         System.out.print("Please, select the individual author you want to join a Ad Hoc Team: ");
+         userInput = scanner.nextLine();
+         validUserInput = isInteger(userInput);
+         if (!validUserInput) {
+            System.out.println("Invalid input. Please enter an integer.");
+         }
+         else {
+            authorNumber = Integer.parseInt(userInput);
+            if(authorNumber > 0 && authorNumber < individual_authorsList.size() + 1){
+               isValidAuthorNumb = true;
+            }
+            else{
+               System.out.println(authorNumber + " is not a valid individual author number. Try again.");
+               isValidAuthorNumb = false;
+            }
+         }
+      }
+      String indivAuthor = individual_authorsList.get(authorNumber - 1).getEmail();
+
+      Individual_authors selectedIndividual = manager.find(Individual_authors.class, indivAuthor);
+      List<Ad_hoc_teams> listOfTeams = selectedIndividual.getAd_hoc_teams();
+      listOfTeams = displayAvailableTeams(listOfTeams);
+      System.out.println("List: " + listOfTeams);
+
+      //System.out.println("Name: " + listOfTeams.get(0).getName() + listOfTeams.size());
+      List<Ad_hoc_teams> ad_hoc_teamsList =
+              this.entityManager.createNamedQuery("ReturnAllAdHocTeams", Ad_hoc_teams.class).getResultList();
+      if(!listOfTeams.isEmpty()) {
+         //displayAllAdHocTeams();
+         validUserInput = false;
+         boolean isValidNumb = false;
+         int teamNumber = -1;
+
+         while (!validUserInput || !isValidNumb) {
+            System.out.print("Please, select the Ad Hoc Team for " + individual_authorsList.get(authorNumber - 1).getName() + ": ");
+            userInput = scanner.nextLine();
+            validUserInput = isInteger(userInput);
+            if (!validUserInput) {
+               System.out.println("Invalid input. Please enter an integer.");
+            } else {
+               teamNumber = Integer.parseInt(userInput);
+               if (teamNumber > 0 && teamNumber < listOfTeams.size() + 1) {
+                  isValidNumb = true;
+               } else {
+                  System.out.println(teamNumber + " is not a valid Ad Hoc Team number. Try again.");
+                  isValidNumb = false;
+               }
+            }
+         }
+
+         //System.out.println("Ad Hoc team: " + listOfTeams.get(teamNumber - 1).getName());
+         //System.out.println("Selected book: " + allBooks.get(bookNumber - 1).getTitle());
+         String selectedIndivAuthor = individual_authorsList.get(authorNumber - 1).getEmail();
+         String selectedTeamEmail = listOfTeams.get(teamNumber - 1).getEmail();
+         String selectedTeamName = listOfTeams.get(teamNumber - 1).getName();
+         Individual_authors author = manager.find(Individual_authors.class, selectedIndivAuthor);
+         Ad_hoc_teams teamToJoin = manager.find(Ad_hoc_teams.class, selectedTeamEmail);
+         EntityTransaction tx = manager.getTransaction();
+         tx.begin();
+         author.add_ad_hoc_teams(teamToJoin);
+         tx.commit();
+         LOGGER.fine("End of Transaction");
+
+
+      }
+      else{
+         System.out.println("No Ad Hoc Teams available. Add a new Ad Hoc Team");
+      }
+   }
+
    public void booksMenu(){
       Scanner input = new Scanner(System.in);
       boolean exitVar = true;
       while(exitVar) {
          System.out.println("Books Menu. Type in a number to choose an option");
          System.out.println("\n1. Display all books \t2. Add a new book");
-         System.out.println("3. Remove a book   \t4. Update a book");
+         System.out.println("3. Remove a book      \t4. Update a book");
          System.out.println("5. Go to Main menu");
 
          int userOption = input.nextInt();
@@ -664,7 +734,7 @@ public class BookRecords {
          }
       }
 
-      System.out.println("Selected book: " + allBooks.get(bookNumber - 1).getTitle());
+      //System.out.println("Selected book: " + allBooks.get(bookNumber - 1).getTitle());
       String selectedBook = allBooks.get(bookNumber - 1).getISBN();
       EntityTransaction tx = manager.getTransaction();
       Books bookToRemove = manager.find(Books.class, selectedBook);
@@ -979,7 +1049,7 @@ public class BookRecords {
       individual_authorsList.add(individual_author5);
 
       /**Adding new Ad Hoc Teams*/
-      Ad_hoc_teams ad_hoc_teams1 = new Ad_hoc_teams("Friday.Night@gmail.com", "Friday Night");
+      Ad_hoc_teams ad_hoc_teams1 = new Ad_hoc_teams("Friday.Nights@gmail.com", "Friday Nights");
       Ad_hoc_teams ad_hoc_teams2 = new Ad_hoc_teams("Saturday.Night@gmail.com", "Saturday Night");
       ad_hoc_teamsList.add(ad_hoc_teams1);
       ad_hoc_teamsList.add(ad_hoc_teams2);
@@ -1184,6 +1254,56 @@ public class BookRecords {
          allAuthoringEntities.add(info);
       }
       return allAuthoringEntities;
+   }
+
+   public List<Ad_hoc_teams> displayAvailableTeams(List<Ad_hoc_teams> authorInTeams){
+      List<Ad_hoc_teams> temp = new ArrayList<>();
+      List<Ad_hoc_teams> ad_hoc_teamsList =
+              this.entityManager.createNamedQuery("ReturnAllAdHocTeams", Ad_hoc_teams.class).getResultList();
+      if(authorInTeams.isEmpty()){
+         displayAllAdHocTeams();
+         return ad_hoc_teamsList;
+      }
+      else if(authorInTeams.size() != ad_hoc_teamsList.size()) {
+         int count = 1;
+         System.out.println("List of Ad Hoc Teams:");
+         System.out.println("\t NAME \t\t\t\tEMAIL");
+         for (int i = 0; i < ad_hoc_teamsList.size(); i++) {
+            boolean found = false;
+            for(int index = 0; index < authorInTeams.size(); index++) {
+               if (authorInTeams.get(index).getEmail().equals(ad_hoc_teamsList.get(i).getEmail())) {
+                  found = true;
+               }
+            }
+            if(!found){
+               System.out.println(count + ". " + ad_hoc_teamsList.get(i).getName() + "\t|  " + ad_hoc_teamsList.get(i).getEmail());
+               temp.add(ad_hoc_teamsList.get(i));
+               count++;
+            }
+         }
+         return temp;
+      }
+      else{
+         System.out.println("Individual author is part of all available Ad Hoc Teams. Add a new Ad Hoc Team");
+         return new ArrayList<>();
+      }
+   }
+
+   public void displayAdHocTeamMembers(){
+      EntityManagerFactory factory = Persistence.createEntityManagerFactory("BookRecords");
+      EntityManager manager = factory.createEntityManager();
+      List<Individual_authors> individual_authorsList =
+              this.entityManager.createNamedQuery("ReturnAllIndividualAuthors", Individual_authors.class).getResultList();
+      System.out.println("\tINDIVIDUAL AUTHORS EMAILS\t\t\tAD HOC TEAMS EMAIL");
+      for(int i = 0; i < individual_authorsList.size(); i++){
+         String indivAuthor = individual_authorsList.get(i).getEmail();
+         Individual_authors selectedIndividual = manager.find(Individual_authors.class, indivAuthor);
+         List<Ad_hoc_teams> listOfTeams = selectedIndividual.getAd_hoc_teams();
+         for(int index = 0; index < listOfTeams.size(); index++){
+            System.out.println(individual_authorsList.get(i).getEmail() + "\t\t" + listOfTeams.get(index).getEmail());
+         }
+      }
+
    }
 
 
