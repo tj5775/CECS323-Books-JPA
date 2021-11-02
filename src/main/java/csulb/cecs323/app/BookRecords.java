@@ -170,35 +170,107 @@ public class BookRecords {
       List<List<String>> allAuthoringEntList = getAllAuthoringEntities();
       boolean exitVar = true;
       while(exitVar) {
-         System.out.println("Authoring Entities Menu. Type in a number to choose an option");
-         System.out.println("\n1. Display all Authoring Entities \t2. Add a new Authoring Entity");
-         //System.out.println("3. Remove an Authoring Entity   \t4. Update an Authoring Entity");
-         System.out.println("3. Go to Main menu");
+         System.out.println("Authoring Entities Add Menu. What type of Authoring Entity do you want to add?");
+         System.out.println("\n1. Add Individual Author \t2. Add Ad Hoc Team");
+         System.out.println("3. Add Writing Group \t\t4. Add an existing Individual Author to a Ad Hoc Team");
+         System.out.println("5. Go to Authoring Entities menu");
 
          int userOption = scanner.nextInt();
          switch(userOption) {
             case 1:
-               System.out.println("Display all Authoring Entity");
+               System.out.println("Add new Individual Author");
                exitVar = false;
-               displayAllAuthoringEntities();
-               authoringEntitiesMenu();
+               addIndividualAuthorMenu();
+               authoringEntityAddMenu();
                break;
             case 2:
-               System.out.println("Add a new Authoring Entity");
+               System.out.println("Add new Ad Hoc Team");
                exitVar = false;
+
                authoringEntityAddMenu();
-               authoringEntitiesMenu();
                break;
             case 3:
-               System.out.println("Go to main menu");
+               System.out.println("Add new Writing Group");
                exitVar = false;
-               mainMenu();
+
+               authoringEntityAddMenu();
+               break;
+            case 4:
+               System.out.println("Add an existing Individual Author to a Ad Hoc Team");
+               exitVar = false;
+
+               authoringEntityAddMenu();
+               break;
+            case 5:
+               System.out.println("Go to Authoring Entities menu");
+               exitVar = false;
                break;
             default:
                System.out.println("You have chosen an invalid option, please enter another input");
                break;
          }
       }
+   }
+
+   public void addIndividualAuthorMenu(){
+      EntityManagerFactory factory = Persistence.createEntityManagerFactory("BookRecords");
+      EntityManager manager = factory.createEntityManager();
+      BookRecords publishedBookRecords = new BookRecords(manager);
+      List<List<String>> authoringEntList = getAllAuthoringEntities();
+      List<Individual_authors> individual_authorsList =
+              this.entityManager.createNamedQuery("ReturnAllIndividualAuthors", Individual_authors.class).getResultList();
+      Scanner scanner = new Scanner(System.in);
+      String name = "";
+      String email = "";
+      boolean validInfo = false;
+      System.out.println("Please enter the following book's information:");
+
+      // Selecting Name
+      while(!validInfo) {
+         System.out.print("Name: ");
+         name = scanner.nextLine();
+         if(!isInteger(name)){
+            validInfo = true;
+         }
+         else{
+            System.out.println("Invalid input. Try again.");
+         }
+      }
+
+      // Selecting Email
+      validInfo = false;
+      while(!validInfo) {
+         System.out.print("Email: ");
+         email = scanner.nextLine();
+         if(!isInteger(email)){
+            boolean validEmail = true;
+            for(int i = 0; i < authoringEntList.size(); i++){
+               if(authoringEntList.get(i).get(2).equals(email)){
+                  validEmail = false;
+               }
+            }
+            if(validEmail) {
+               validInfo = true;
+            }
+            else{
+               System.out.println(email + " already exist in the database. Please select a different email.");
+            }
+         }
+         else{
+            System.out.println("Invalid input. Try again.");
+         }
+      }
+
+      EntityTransaction tx = manager.getTransaction();
+      List<Individual_authors> listIndividualAuthors = new ArrayList<>();
+      tx.begin();
+
+      Individual_authors newIndivAuthor = new Individual_authors(email, name);
+      listIndividualAuthors.add(newIndivAuthor);
+      publishedBookRecords.createEntity(listIndividualAuthors);
+
+      tx.commit();
+      LOGGER.fine("End of Transaction");
    }
 
    public void booksMenu(){
