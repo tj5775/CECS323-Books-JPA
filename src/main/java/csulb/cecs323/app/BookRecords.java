@@ -102,7 +102,9 @@ public class BookRecords {
             case 4:
                System.out.println("Option 4");
                exitVar = false;
-
+               displayPrimaryKeys();
+               System.out.println();
+               primaryKeyMenu();
                break;
             case 5:
                System.out.println("Option 5");
@@ -791,6 +793,28 @@ public class BookRecords {
       LOGGER.fine("End of Transaction");
    }
 
+   public void primaryKeyMenu() {
+      System.out.println("Option 1: Go back To Main Menu\nOption 2: Exit");
+      Scanner input = new Scanner(System.in);
+      boolean exitVar = true;
+      while (exitVar) {
+         int userOption = input.nextInt();
+         switch (userOption) {
+            case 1:
+               System.out.println("Go to main menu");
+               exitVar = false;
+               mainMenu();
+               break;
+            case 2:
+               exitVar = false;
+               break;
+            default:
+               System.out.println("You have chosen an invalid option, please enter another input");
+               break;
+         }
+      }
+   }
+
    public void populateAuthoringEnt(List<Individual_authors> individual_authorsList, List<Ad_hoc_teams> ad_hoc_teamsList,
                                     List<Writing_groups> writing_groupsList, List<Books> booksList){
 
@@ -934,6 +958,47 @@ public class BookRecords {
       }
       else{
          System.out.println("Records of AD HOC TEAMS do NOT exist.");
+      }
+   }
+
+   public void displayPrimaryKeys(){
+      List<Books> bookList =
+              this.entityManager.createNamedQuery("ReturnAllBooks", Books.class).getResultList();
+      List<Publisher> publisherList =
+              this.entityManager.createNamedQuery("ReturnAllPublishers", Publisher.class).getResultList();
+      List<Authoring_Entities> authoringEntityList =
+              this.entityManager.createNamedQuery("Authoring_entities_all", Authoring_Entities.class).getResultList();
+      System.out.println("Book Primary Keys\n");
+      //Book Primary Keys
+      if(!bookList.isEmpty()) {
+         for (int i = 0; i < bookList.size(); i++) {
+            System.out.println((i + 1) + ". " + bookList.get(i).getISBN() + " " + bookList.get(i).getTitle());
+         }
+      }
+      else{
+         System.out.println("Records of Books does not exist.");
+      }
+
+      //Publisher Primary Keys
+      System.out.println("\nPublisher Primary Keys\n");
+      if(!publisherList.isEmpty()) {
+         for (int i = 0; i < publisherList.size(); i++) {
+            System.out.println((i + 1) + ". " +publisherList.get(i).getName());
+         }
+      }
+      else{
+         System.out.println("Records of Publishers does not exist.");
+      }
+
+      //Authoring Entities List
+      System.out.println("\nAuthoring Entities Primary Keys\n");
+      if(!authoringEntityList.isEmpty()) {
+         for (int i = 0; i < authoringEntityList.size(); i++) {
+            System.out.println((i + 1) + ". " +authoringEntityList.get(i).getEmail() + " \nType:" + authoringEntityList.get(i).getClass());
+         }
+      }
+      else{
+         System.out.println("Records of Publishers does not exist.");
       }
    }
 
