@@ -973,7 +973,7 @@ public class BookRecords {
       //Book Primary Keys
       if(!bookList.isEmpty()) {
          for (int i = 0; i < bookList.size(); i++) {
-            System.out.println((i + 1) + ". " + bookList.get(i).getISBN());
+            System.out.println((i + 1) + ". " + bookList.get(i).getISBN() + " " + bookList.get(i).getTitle());
          }
       }
       else{
