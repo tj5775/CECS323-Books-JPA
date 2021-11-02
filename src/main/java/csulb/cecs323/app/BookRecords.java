@@ -188,13 +188,13 @@ public class BookRecords {
             case 2:
                System.out.println("Add new Ad Hoc Team");
                exitVar = false;
-
+               addAdHocTeam();
                authoringEntityAddMenu();
                break;
             case 3:
                System.out.println("Add new Writing Group");
                exitVar = false;
-
+               addWritingGroup();
                authoringEntityAddMenu();
                break;
             case 4:
@@ -270,6 +270,154 @@ public class BookRecords {
       Individual_authors newIndivAuthor = new Individual_authors(email, name);
       listIndividualAuthors.add(newIndivAuthor);
       publishedBookRecords.createEntity(listIndividualAuthors);
+
+      tx.commit();
+      LOGGER.fine("End of Transaction");
+   }
+
+   public void addAdHocTeam(){
+      EntityManagerFactory factory = Persistence.createEntityManagerFactory("BookRecords");
+      EntityManager manager = factory.createEntityManager();
+      BookRecords publishedBookRecords = new BookRecords(manager);
+      List<List<String>> authoringEntList = getAllAuthoringEntities();
+      Scanner scanner = new Scanner(System.in);
+      String name = "";
+      String email = "";
+      boolean validInfo = false;
+      System.out.println("Please enter the following Ad Hoc Team's information:");
+
+      // Selecting Name
+      while(!validInfo) {
+         System.out.print("Team's Name: ");
+         name = scanner.nextLine();
+         if(!isInteger(name)){
+            validInfo = true;
+         }
+         else{
+            System.out.println("Invalid input. Try again.");
+         }
+      }
+
+      // Selecting Email
+      validInfo = false;
+      while(!validInfo) {
+         System.out.print("Team's Email: ");
+         email = scanner.nextLine();
+         if(!isInteger(email)){
+            boolean validEmail = true;
+            for(int i = 0; i < authoringEntList.size(); i++){
+               if(authoringEntList.get(i).get(2).equals(email)){
+                  validEmail = false;
+               }
+            }
+            if(validEmail) {
+               validInfo = true;
+            }
+            else{
+               System.out.println(email + " already exist in the database. Please select a different email.");
+            }
+         }
+         else{
+            System.out.println("Invalid input. Try again.");
+         }
+      }
+
+      EntityTransaction tx = manager.getTransaction();
+      List<Ad_hoc_teams> listAdHocTeam = new ArrayList<>();
+      tx.begin();
+
+      Ad_hoc_teams newAdHocTeam = new Ad_hoc_teams(email, name);
+      listAdHocTeam.add(newAdHocTeam);
+      publishedBookRecords.createEntity(listAdHocTeam);
+
+      tx.commit();
+      LOGGER.fine("End of Transaction");
+   }
+
+   public void addWritingGroup(){
+      EntityManagerFactory factory = Persistence.createEntityManagerFactory("BookRecords");
+      EntityManager manager = factory.createEntityManager();
+      BookRecords publishedBookRecords = new BookRecords(manager);
+      List<List<String>> authoringEntList = getAllAuthoringEntities();
+      Scanner scanner = new Scanner(System.in);
+      String name = "";
+      String email = "";
+      String head_writer = "";
+      String year_formed = "";
+      boolean validInfo = false;
+      System.out.println("Please enter the following Writing Group's information:");
+
+      // Selecting Name
+      while(!validInfo) {
+         System.out.print("Writing Group's Name: ");
+         name = scanner.nextLine();
+         if(!isInteger(name)){
+            validInfo = true;
+         }
+         else{
+            System.out.println("Invalid input. Try again.");
+         }
+      }
+
+      // Selecting Email
+      validInfo = false;
+      while(!validInfo) {
+         System.out.print("Writing Group's Email: ");
+         email = scanner.nextLine();
+         if(!isInteger(email)){
+            boolean validEmail = true;
+            for(int i = 0; i < authoringEntList.size(); i++){
+               if(authoringEntList.get(i).get(2).equals(email)){
+                  validEmail = false;
+               }
+            }
+            if(validEmail) {
+               validInfo = true;
+            }
+            else{
+               System.out.println(email + " already exist in the database. Please select a different email.");
+            }
+         }
+         else{
+            System.out.println("Invalid input. Try again.");
+         }
+      }
+
+      // Selecting Head Writer
+      validInfo = false;
+      while(!validInfo) {
+         System.out.print("Head writer: ");
+         head_writer = scanner.nextLine();
+         if(!isInteger(head_writer)){
+            validInfo = true;
+         }
+         else{
+            System.out.println("Invalid input. Try again.");
+         }
+      }
+
+      // Selecting year formed
+      validInfo = false;
+      while(!validInfo) {
+         System.out.print("(4 digits) Year Formed: ");
+         year_formed = scanner.nextLine();
+         if(isInteger(year_formed) && year_formed.length() == 4){
+            validInfo = true;
+         }
+         else{
+            System.out.println("Invalid input (4 digits only). Try again.");
+         }
+      }
+
+
+
+      EntityTransaction tx = manager.getTransaction();
+      List<Writing_groups> listWritingGroup = new ArrayList<>();
+      tx.begin();
+
+      Writing_groups newWritingGroup = new Writing_groups(email, name, head_writer, Integer.parseInt(year_formed));
+      listWritingGroup.add(newWritingGroup);
+      publishedBookRecords.createEntity(listWritingGroup);
 
       tx.commit();
       LOGGER.fine("End of Transaction");
@@ -966,8 +1114,6 @@ public class BookRecords {
               this.entityManager.createNamedQuery("ReturnAllBooks", Books.class).getResultList();
       List<Publisher> publisherList =
               this.entityManager.createNamedQuery("ReturnAllPublishers", Publisher.class).getResultList();
-      List<Authoring_Entities> authoringEntityList =
-              this.entityManager.createNamedQuery("Authoring_entities_all", Authoring_Entities.class).getResultList();
       List<List<String>> listAuthoringEntities = getAllAuthoringEntities();
       System.out.println("Book Primary Keys\n");
       //Book Primary Keys
@@ -993,9 +1139,8 @@ public class BookRecords {
 
       //Authoring Entities List
       System.out.println("\nAuthoring Entities Primary Keys\n");
-      if(!authoringEntityList.isEmpty()) {
-         for (int i = 0; i < authoringEntityList.size(); i++) {
-            //System.out.println((i + 1) + ". " +authoringEntityList.get(i).getEmail() + " \nType:" + authoringEntityList.get(i).getClass());
+      if(!listAuthoringEntities.isEmpty()) {
+         for (int i = 0; i < listAuthoringEntities.size(); i++) {
             System.out.println((i + 1) + ". " + listAuthoringEntities.get(i).get(2) + "\t  Type: " + listAuthoringEntities.get(i).get(0));
 
          }
