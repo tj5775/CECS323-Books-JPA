@@ -968,11 +968,12 @@ public class BookRecords {
               this.entityManager.createNamedQuery("ReturnAllPublishers", Publisher.class).getResultList();
       List<Authoring_Entities> authoringEntityList =
               this.entityManager.createNamedQuery("Authoring_entities_all", Authoring_Entities.class).getResultList();
+      List<List<String>> listAuthoringEntities = getAllAuthoringEntities();
       System.out.println("Book Primary Keys\n");
       //Book Primary Keys
       if(!bookList.isEmpty()) {
          for (int i = 0; i < bookList.size(); i++) {
-            System.out.println((i + 1) + ". " + bookList.get(i).getISBN() + " " + bookList.get(i).getTitle());
+            System.out.println((i + 1) + ". " + bookList.get(i).getISBN());
          }
       }
       else{
@@ -994,7 +995,9 @@ public class BookRecords {
       System.out.println("\nAuthoring Entities Primary Keys\n");
       if(!authoringEntityList.isEmpty()) {
          for (int i = 0; i < authoringEntityList.size(); i++) {
-            System.out.println((i + 1) + ". " +authoringEntityList.get(i).getEmail() + " \nType:" + authoringEntityList.get(i).getClass());
+            //System.out.println((i + 1) + ". " +authoringEntityList.get(i).getEmail() + " \nType:" + authoringEntityList.get(i).getClass());
+            System.out.println((i + 1) + ". " + listAuthoringEntities.get(i).get(2) + "\t  Type: " + listAuthoringEntities.get(i).get(0));
+
          }
       }
       else{
@@ -1035,7 +1038,6 @@ public class BookRecords {
          info.add(writing_groupsList.get(i).getEmail());
          allAuthoringEntities.add(info);
       }
-      System.out.println("Authoring: " + allAuthoringEntities);
       return allAuthoringEntities;
    }
 

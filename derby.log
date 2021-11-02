@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Mon Nov 01 20:57:15 PDT 2021:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-017c-decb-427d-00001eb379a8 
-on database directory E:\Desktop\CECS 323 notes\CECS323-Books-JPA\database\BookRecords with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@1d44bcfa 
-Loaded from file:/C:/Users/Andrew%20Bae/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
-java.vendor=Oracle Corporation
-java.runtime.version=16.0.1+9-24
-user.dir=E:\Desktop\CECS 323 notes\CECS323-Books-JPA
-os.name=Windows 10
-os.arch=amd64
-os.version=10.0
+Mon Nov 01 23:06:02 PDT 2021:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-017c-df41-2a18-000007588470 
+on database directory /Users/User/Desktop/Python/Exercise3-3-1.3/CECS323-Books-JPA/database/BookRecords with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@7ad041f3 
+Loaded from file:/Users/User/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
+java.vendor=Amazon.com Inc.
+java.runtime.version=16.0.2+7
+user.dir=/Users/User/Desktop/Python/Exercise3-3-1.3/CECS323-Books-JPA
+os.name=Mac OS X
+os.arch=x86_64
+os.version=10.15.5
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
