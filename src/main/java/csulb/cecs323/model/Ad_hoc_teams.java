@@ -22,6 +22,9 @@ import java.util.List;
                 "ORDER BY individual_authors_email ",
         resultClass = Authoring_Entities.class)
 @DiscriminatorValue("Ad Hoc Teams")
+/**
+ * A Collection of individual authors
+ */
 public class Ad_hoc_teams extends Authoring_Entities{
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
@@ -31,14 +34,27 @@ public class Ad_hoc_teams extends Authoring_Entities{
     )
     private List<Individual_authors> individual_authors;
 
+    /**
+     *Constructor for all private variables in Ad_hoc_teams
+     * @param email
+     * @param name
+     */
     public Ad_hoc_teams(String email, String name) {
         super(email, name);
         this.individual_authors = new ArrayList<>();
     }
 
+    /**
+     *Default constructor
+     */
     public Ad_hoc_teams() {
 
     }
+
+    /**
+     * A method to add individual authors
+     * @param individual_author
+     */
     public void add_individual_authors(Individual_authors individual_author){
         if(! this.individual_authors.contains(individual_author)){
             this.individual_authors.add(individual_author);
@@ -46,6 +62,10 @@ public class Ad_hoc_teams extends Authoring_Entities{
         }
     }
 
+    /**
+     * A method to remove an individual author
+     * @param individual_author
+     */
     public void remove_individual_authors(Individual_authors individual_author){
         if(this.individual_authors.contains(individual_author)){
             this.individual_authors.remove(individual_author);
@@ -53,10 +73,18 @@ public class Ad_hoc_teams extends Authoring_Entities{
         }
     }
 
+    /**
+     * A get method that returns the list of individual authors
+     * @return          individual_authors
+     */
     public List<Individual_authors> getIndividual_authors() {
         return individual_authors;
     }
 
+    /**
+     * A set method for Ad_hoc_teams
+     * @param individual_authors
+     */
     public void setIndividual_authors(List<Individual_authors> individual_authors) {
         this.individual_authors = new ArrayList<Individual_authors>();
     }

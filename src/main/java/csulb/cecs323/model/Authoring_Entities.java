@@ -22,6 +22,9 @@ import java.util.List;
 
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "authoring_entities_type", discriminatorType = DiscriminatorType.STRING)
+/**
+ *Author or Authors of a book
+ */
 public class Authoring_Entities {
 
     @Id
@@ -34,32 +37,60 @@ public class Authoring_Entities {
     @OneToMany(mappedBy = "entity_name", cascade = CascadeType.PERSIST)
     private List<Books> books;
 
+    /**
+     * A constructor with all the private varaibles in Authoring_Entities
+     * @param email
+     * @param name
+     */
     public Authoring_Entities(String email, String name) {
         this.email = email;
         this.name = name;
     }
 
+    /**
+     * Default Constructor
+     */
     public Authoring_Entities() {
 
     }
 
+    /**
+     * Get method for email
+     * @return          email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Set method for email
+     * @param email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Get method for name
+     * @return          name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Set method for name
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
 
+    /**
+     * toString method for Authoring_Entities
+     * @return
+     */
     @Override
     public String toString() {
         return "Authoring_Entities{" +
